@@ -20,11 +20,9 @@ pub fn get_cpu_data_list(sys: &System, show_average_cpu: bool) -> CollectionResu
         .collect();
 
     if show_average_cpu {
-        let cpu = sys.global_cpu_info();
-
         cpu_deque.push_front(CpuData {
             data_type: CpuDataType::Avg,
-            cpu_usage: cpu.cpu_usage() as f64,
+            cpu_usage: sys.global_cpu_usage() as f64,
         })
     }
 

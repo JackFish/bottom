@@ -579,7 +579,7 @@ pub fn get_args() -> BottomArgs {
 
 /// Returns an [`Command`] based off of [`BottomArgs`].
 #[cfg(test)]
-pub(crate) fn build_cmd() -> Command {
+pub fn build_cmd() -> Command {
     BottomArgs::command()
 }
 

@@ -84,7 +84,7 @@ backtrace = "0.3.74"
 cfg-if = "1.0.0"
 clap = { version = "4.5.16", features = ["default", "cargo", "wrap_help", "derive"] }
 concat-string = "1.0.1"
-crossterm = "0.27.0"
+crossterm = "0.28.1"
 ctrlc = { version = "3.4.5", features = ["termination"] }
 dirs = "5.0.1"
 hashbrown = "0.14.5"
@@ -95,10 +95,10 @@ itertools = "0.13.0"
 nvml-wrapper = { version = "0.10.0", optional = true, features = ["legacy-functions"] }
 regex = "1.10.6"
 serde = { version = "1.0.210", features = ["derive"] }
-starship-battery = { version = "0.9.1", optional = true }
-sysinfo = "=0.30.13"
+starship-battery = { version = "0.10.0", optional = true }
+sysinfo = "0.31.4"
 toml_edit = { version = "0.22.17", features = ["serde"] }
-tui = { version = "0.27.0", package = "ratatui" }
+tui = { version = "0.28.1", package = "ratatui" }
 unicode-ellipsis = "0.2.0"
 unicode-segmentation = "1.11.0"
 unicode-width = "0.1.13"
@@ -136,14 +136,13 @@ windows = { version = "0.58.0", features = [
 
 [target.'cfg(target_os = "freebsd")'.dependencies]
 serde_json = { version = "1.0.127" }
-sysctl = { version = "0.5.5" }
+sysctl = { version = "0.6.0" }
 filedescriptor = "0.8.2"
 
 [dev-dependencies]
 assert_cmd = "2.0.16"
 cargo-husky = { version = "1.5.0", default-features = false, features = ["user-hooks"] }
 predicates = "3.1.2"
-tempfile = "3.12.0"
 
 [target.'cfg(all(target_arch = "x86_64", target_os = "linux"))'.dev-dependencies]
 portable-pty = "0.8.1"

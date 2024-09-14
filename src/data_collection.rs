@@ -22,6 +22,7 @@ use hashbrown::HashMap;
 use processes::Pid;
 #[cfg(feature = "battery")]
 use starship_battery::{Battery, Manager};
+use sysinfo::ProcessesToUpdate;
 
 use self::temperature::TemperatureType;
 use super::DataFilters;
@@ -268,7 +269,7 @@ impl DataCollector {
         let refresh_start = Instant::now();
 
         if self.widgets_to_harvest.use_cpu || self.widgets_to_harvest.use_proc {
-            self.sys.system.refresh_cpu();
+            self.sys.system.refresh_cpu_all();
         }
 
         if self.widgets_to_harvest.use_mem || self.widgets_to_harvest.use_proc {
@@ -290,6 +291,7 @@ impl DataCollector {
         {
             if self.widgets_to_harvest.use_proc {
                 self.sys.system.refresh_processes_specifics(
+                    ProcessesToUpdate::All,
                     sysinfo::ProcessRefreshKind::everything()
                         .without_environ()
                         .without_cwd()

@@ -639,7 +639,8 @@ where
         {
             if ch != ' ' && ch != '\u{2800}' {
                 let (x, y) = (i % width, i / width);
-                buf.get_mut(x as u16 + canvas_area.left(), y as u16 + canvas_area.top())
+                buf.cell_mut((x as u16 + canvas_area.left(), y as u16 + canvas_area.top()))
+                    .unwrap()
                     .set_char(ch)
                     .set_fg(fg)
                     .set_bg(bg);

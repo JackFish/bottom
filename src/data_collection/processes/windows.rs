@@ -1,10 +1,9 @@
 //! Process data collection for Windows. Uses sysinfo.
 
-use std::time::Duration;
-
 use super::ProcessHarvest;
 use crate::data_collection::error::CollectionResult;
 use crate::data_collection::DataCollector;
+use std::time::Duration;
 
 // TODO: There's a lot of shared code with this and the unix impl.
 pub fn sysinfo_process_data(
@@ -18,14 +17,14 @@ pub fn sysinfo_process_data(
 
     let mut process_vector: Vec<ProcessHarvest> = Vec::new();
     let process_hashmap = sys.processes();
-    let cpu_usage = sys.global_cpu_info().cpu_usage() as f64 / 100.0;
+    let cpu_usage = sys.global_cpu_usage() as f64 / 100.0;
     let num_processors = sys.cpus().len();
 
     for process_val in process_hashmap.values() {
-        let name = if process_val.name().is_empty() {
+        let name: String = if process_val.name().is_empty() {
             let process_cmd = process_val.cmd();
             if process_cmd.len() > 1 {
-                process_cmd[0].clone()
+                process_cmd[0].clone().to_str().unwrap().to_string()
             } else {
                 process_val
                     .exe()
@@ -35,10 +34,14 @@ pub fn sysinfo_process_data(
                     .unwrap_or(String::new())
             }
         } else {
-            process_val.name().to_string()
+            process_val.name().to_str().unwrap().to_string()
         };
         let command = {
-            let command = process_val.cmd().join(" ");
+            let mut command = String::new();
+            for it in process_val.cmd() {
+                command.push(' ');
+                command.push_str(it.to_str().unwrap());
+            }
             if command.is_empty() {
                 name.to_string()
             } else {
